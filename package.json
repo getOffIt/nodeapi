@@ -9,6 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^5.2.1"
-  }
+    "puppeteer": "^5.2.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+		"start": "node index.js"
+	}
 }
