@@ -1,6 +1,4 @@
 require('dotenv').config()
-var express = require('express');
-var router = express.Router();
 const puppeteer = require('puppeteer');
 const hbrTipsURL = "http://feeds.harvardbusiness.org/managementtip";
 var AWS = require('aws-sdk');
@@ -12,10 +10,12 @@ var s3 = new AWS.S3({
     secretAccessKey: AWS_SECRET_ACCESS_KEY
 });
 
-router.get('/', function (req, res, next) {
+function getFromHBR() {
+    console.log('Starting');
+
     (async () => {
         /* Initiate the Puppeteer browser */
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
         const page = await browser.newPage();
         await page.goto("http://feeds.harvardbusiness.org/managementtip", { waitUntil: 'networkidle0' });
 
@@ -31,17 +31,15 @@ router.get('/', function (req, res, next) {
         });
 
         /* Outputting what we scraped */
-        console.log(data);
+        console.log('\n-------\n' + 'scrapped HTML data to JSON:\n' + JSON.stringify(data) + '\n-------\n');
 
         await browser.close();
-       await uploadToS3('dailytipbucket', 'latestTip.json', data).then(function(result) {
-            console.info('Success! Uploaded ' + data + ' to ' + result.Location);
+        await uploadToS3('dailytipbucket', 'latestTip' + process.env.ENV + '.json', data).then(function(result) {
+            console.info('\n-------\n' + 'Success! Uploaded to S3\n' + JSON.stringify(data) + ' to ' + result.Location + '\n-------\n');
         });
-        
-        res.send(data);
     })();
 
-});
+}
 
 var fs = require('fs');
 var path = require('path');
@@ -65,5 +63,4 @@ function uploadToS3(bucketName, keyPrefix, data) {
             .then(resolve, reject);
     });
 }
-
-module.exports = router;
+getFromHBR();
