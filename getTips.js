@@ -34,7 +34,7 @@ function getFromHBR() {
         console.log(data);
 
         await browser.close();
-       await uploadToS3('dailytipbucket', 'latestTip.json', data).then(function(result) {
+        await uploadToS3('dailytipbucket', 'latestTip' + process.env.ENV + '.json', data).then(function(result) {
             console.info('Success! Uploaded ' + data + ' to ' + result.Location);
         });
         console.log(data);
