@@ -18,7 +18,8 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "puppeteer": "^5.2.1"
+    "puppeteer": "^5.2.1",
+    "aws-sdk": "2.736.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
