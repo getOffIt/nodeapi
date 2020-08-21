@@ -31,13 +31,12 @@ function getFromHBR() {
         });
 
         /* Outputting what we scraped */
-        console.log(data);
+        console.log('\n-------\n' + 'scrapped HTML data to JSON:\n' + JSON.stringify(data) + '\n-------\n');
 
         await browser.close();
         await uploadToS3('dailytipbucket', 'latestTip' + process.env.ENV + '.json', data).then(function(result) {
-            console.info('Success! Uploaded ' + data + ' to ' + result.Location);
+            console.info('\n-------\n' + 'Success! Uploaded to S3\n' + JSON.stringify(data) + ' to ' + result.Location + '\n-------\n');
         });
-        console.log(data);
     })();
 
 }
