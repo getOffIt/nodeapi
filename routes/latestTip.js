@@ -15,7 +15,7 @@ var s3 = new AWS.S3({
 router.get('/', function (req, res, next) {
     (async () => {
         /* Initiate the Puppeteer browser */
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
         const page = await browser.newPage();
         await page.goto("http://feeds.harvardbusiness.org/managementtip", { waitUntil: 'networkidle0' });
 
