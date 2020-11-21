@@ -34,7 +34,7 @@ function getFromHBR() {
         console.log('\n-------\n' + 'scrapped HTML data to JSON:\n' + JSON.stringify(data) + '\n-------\n');
 
         await browser.close();
-        await uploadToS3('hbrtips.com', 'data/latesttipPROD' + process.env.ENV + '.json', data).then(function(result) {
+        await uploadToS3('hbrtips.com', 'data/latesttip' + process.env.ENV + '.json', data).then(function(result) {
             console.info('\n-------\n' + 'Success! Uploaded to S3\n' + JSON.stringify(data) + ' to ' + result.Location + '\n-------\n');
         });
     })();
